@@ -37,18 +37,15 @@ class CollectionExpectationsTest : ch.tutteli.atrium.specs.integration.AbstractC
         star toBe empty
         star2 notToBe empty
 
-        a1.size
-        a1 = a1 size {
+        a1 size {
             it toBeEqualComparingTo 0
         }
 
-        a1b.size
-        a1b = a1b size {
+        a1b size {
             it toBeEqualComparingTo 1
         }
 
-        star.size
-        star = star size {
+        star size {
             it toBeEqualComparingTo 0
         }
     }

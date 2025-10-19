@@ -35,18 +35,15 @@ class CollectionExpectationsTest : ch.tutteli.atrium.specs.integration.AbstractC
         a2b.toHaveSize(2)
         star2.toHaveSize(2)
 
-        a1.size
-        a1 = a1.size {
+        a1.size {
             this.toBeEqualComparingTo(0)
         }
 
-        a1b.size
-        a1b = a1b.size {
+        a1b.size {
             this.toBeEqualComparingTo(2)
         }
 
-        star.size
-        star = star.size {
+        star.size {
             this.toBeEqualComparingTo(0)
         }
     }

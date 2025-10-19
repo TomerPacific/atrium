@@ -1,29 +1,16 @@
 package ch.tutteli.atrium.api.infix.en_GB
 
+import ch.tutteli.atrium.api.verbs.internal.expect
 import ch.tutteli.atrium.creating.Expect
-import org.spekframework.spek2.Spek
+import ch.tutteli.atrium.specs.integration.AbstractIterableNotToContainValuesExpectationsTest
 import kotlin.reflect.KFunction2
+import kotlin.test.Test
 
-class IterableNotToContainValuesExpectationsSpec : Spek({
-
-    include(BuilderSpecToContainAbstract)
-    include(ShortcutSpecToContainAbstract)
-
-}) {
-
-    object BuilderSpecToContainAbstract : ch.tutteli.atrium.specs.integration.AbstractIterableNotToContainValuesExpectationsTest(
-        getNotToContainPair(),
-        getNotToContainNullablePair(),
-        Expect<List<Int>>::notToHaveElementsOrNone.name,
-        "[Atrium][Builder] "
-    )
-
-    object ShortcutSpecToContainAbstract : ch.tutteli.atrium.specs.integration.AbstractIterableNotToContainValuesExpectationsTest(
-        getNotToContainShortcutPair(),
-        getNotToContainNullablePair(),
-        Expect<List<Int>>::notToHaveElementsOrNone.name,
-        "[Atrium][Shortcut] "
-    )
+class IterableNotToContainValuesExpectationsBuilderTest : AbstractIterableNotToContainValuesExpectationsTest(
+    getNotToContainPair(),
+    getNotToContainNullablePair(),
+    Expect<List<Int>>::notToHaveElementsOrNone.name
+) {
 
     companion object : IterableToContainSpecBase() {
 
@@ -55,5 +42,24 @@ class IterableNotToContainValuesExpectationsSpec : Spek({
         private fun notToContainShortcut(expect: Expect<Iterable<Double>>, a: Double, aX: Array<out Double>) =
             if (aX.isEmpty()) expect notToContain a
             else expect notToContain values(a, *aX)
+    }
+
+    @Suppress("AssignedValueIsNeverRead", "UNUSED_VALUE")
+    @Test
+    fun ambiguityTest() {
+        var list: Expect<List<Number>> = expect(listOf(1))
+        var nList: Expect<Set<Number?>> = expect(setOf(1))
+        var subList: Expect<ArrayList<Number>> = expect(arrayListOf(1))
+        var star: Expect<Collection<*>> = expect(listOf(1))
+
+        list = list notToContain o value 2
+        nList = nList notToContain o value 2
+        subList = subList notToContain o value 2
+        star = star notToContain o value 2
+
+        list = list notToContain o the values(2, 1.2)
+        nList = nList notToContain o the values(2, 1.2)
+        subList = subList notToContain o the values(2, 2.2)
+        star = star notToContain o the values(2, 1.2, "asdf")
     }
 }
