@@ -63,7 +63,7 @@ abstract class AbstractIterableNotToContainValuesExpectationsTest(
     }
 
     @TestFactory
-    fun happy__cases__do_not_throw() = testFactory(notToContainValuesSpec) { notToContainFun ->
+    fun happy_cases__do_not_throw() = testFactory(notToContainValuesSpec) { notToContainFun ->
 
         it("1.2 does not throw") {
             expect(oneToSeven()).notToContainFun(1.2, arrayOf())
