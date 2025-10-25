@@ -37,15 +37,11 @@ abstract class AbstractIterableNotToContainValuesExpectationsTest(
         )
     )
 
-
-    fun Expect<Iterable<Double?>>.notToContainNullableFun(a: Double?, vararg aX: Double?) =
-        notToContainNullableValuesSpec(this, a, aX)
-
     val anElementWhichIsWithIndent = "$indentRootBulletPoint$listBulletPoint$anElementWhichEquals"
 
 
     @TestFactory
-    fun empty_collection__4_throws() = nonNullableCases(
+    fun empty_collection__throws() = nonNullableCases(
         notToContainValuesSpec,
         notToContainNullableValuesSpec
     ) { notToContainValuesFun ->
@@ -139,13 +135,13 @@ abstract class AbstractIterableNotToContainValuesExpectationsTest(
     }
 
     @TestFactory
-    fun nullable_cases() = testFactory(notToContainNullableValuesSpec) { notToContainFun ->
+    fun nullable_cases() = testFactory(notToContainNullableValuesSpec) { notToContainNullableFun ->
         it("null does not throw") {
-            expect(oneToSeven() as Iterable<Double?>).notToContainNullableFun(null)
+            expect(oneToSeven() as Iterable<Double?>).notToContainNullableFun(null, arrayOf())
         }
         it("null throws AssertionError") {
             expect {
-                expect(oneToSevenNullable()).notToContainNullableFun(null)
+                expect(oneToSevenNullable()).notToContainNullableFun(null, arrayOf())
             }.toThrow<AssertionError> {
                 message {
                     toContainRegex(
@@ -160,7 +156,7 @@ abstract class AbstractIterableNotToContainValuesExpectationsTest(
         }
         it("1.2, null throws AssertionError mentioning only null") {
             expect {
-                expect(oneToSevenNullable()).notToContainNullableFun(1.2, null)
+                expect(oneToSevenNullable()).notToContainNullableFun(1.2, arrayOf())
             }.toThrow<AssertionError> {
                 message {
                     toContainRegex(
